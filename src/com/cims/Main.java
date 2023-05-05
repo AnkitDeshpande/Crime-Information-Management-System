@@ -2,16 +2,31 @@
 package com.cims;
 
 import java.util.*;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.time.LocalDate;
 
+import com.cims.entity.Crime;
+import com.cims.entity.Public;
 import com.cims.exceptions.InvalidDataExeception;
 import com.cims.exceptions.InvalidInputException;
+import com.cims.services.CrimeService;
+import com.cims.services.CrimeServiceImp;
 import com.cims.utility.Admin;
+import com.cims.utility.FileExists;
+import com.cims.utility.Genrate_ID;
 
 public class Main {
-	private static void adminFunctionilty(Scanner sc) throws InvalidDataExeception {
+
+	private static void adminFunctionilty(Scanner sc, Map<Integer, Crime> crimes, Map<String, Public> Publics)
+			throws InvalidDataExeception {
 		// TODO Auto-generated method stub
 
 		adminLogin(sc);
+
+		CrimeService cService = new CrimeServiceImp();
 
 		int choice = 0;
 		try {
@@ -28,9 +43,10 @@ public class Main {
 				choice = sc.nextInt();
 
 				switch (choice) {
-				
+
 				case 1:
-					System.out.println(1);
+					String added = AdminAddCrime(sc, crimes, cService);
+					System.out.println(added);
 					break;
 				case 2:
 					System.out.println(2);
@@ -67,6 +83,23 @@ public class Main {
 
 	}
 
+	private static String AdminAddCrime(Scanner sc, Map<Integer, Crime> crimes, CrimeService cService) {
+		// TODO Auto-generated method stub
+		String str = null;
+		System.out.println("Enter Crime Details.");
+		System.out.println("Enter Crime category.");
+		String category = sc.next();
+		System.out.println("Describe the crime.");
+		String desc = sc.next();
+		System.out.println("Enter Police station Area.");
+		String ps_area = sc.next();
+		System.out.println("Enter the name of Victim.");
+		String victim = sc.next();
+		Crime c = new Crime(Genrate_ID.genrateID(), category, desc, ps_area, LocalDate.now(), victim);
+		str = cService.addCrime(c, crimes);
+		return str;
+	}
+
 	private static void publicFunctionality(Scanner sc) {
 		// TODO Auto-generated method stub
 		System.out.println("Working");
@@ -90,6 +123,10 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
+
+		Map<Integer, Crime> crimes = FileExists.crimeFile();
+		Map<Integer, Public> p1 = FileExists.publicFile();
+
 		Scanner sc = new Scanner(System.in);
 
 		System.out.println(
@@ -105,7 +142,7 @@ public class Main {
 				choice = sc.nextInt();
 				switch (choice) {
 				case 1:
-					adminFunctionilty(sc);
+					adminFunctionilty(sc, crimes, null);
 					break;
 				case 2:
 					publicFunctionality(sc);
@@ -123,6 +160,13 @@ public class Main {
 			} while (choice != 0);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
+		} finally {
+			try {
+				ObjectOutputStream coos = new ObjectOutputStream(new FileOutputStream("Crime.ser"));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.out.println(e.getMessage());
+			}
 		}
 	}
 
