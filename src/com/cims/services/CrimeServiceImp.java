@@ -30,13 +30,32 @@ public class CrimeServiceImp implements CrimeService {
 	@Override
 	public void deleteCrime(int id, Map<Integer, Crime> crimes) throws CrimeException {
 		// TODO Auto-generated method stub
+		if(crimes!=null && crimes.size()>0) {
+			if(crimes.containsKey(id)) {
+				crimes.remove(id);
+				System.out.println("Crime Removed Successfully.");
+			}else {				
+				throw new CrimeException("No ID found."); 
+			}
+		}else {
+			throw new CrimeException("List is Empty."); 
+		}
 		
 	}
 
 	@Override
-	public String updateCrime(int id, Map<Integer, Crime> crimes) throws CrimeException {
+	public String updateCrime(int id, Crime c, Map<Integer, Crime> crimes) throws CrimeException {
 		// TODO Auto-generated method stub
-		return null;
+		if(crimes!=null && crimes.size()>0) {
+			if(crimes.containsKey(id)) {
+				crimes.put(id, c);
+				return "Crime has successfully updated";
+			}else {
+				throw new CrimeException("Crime not found.");
+			}
+		}else {
+			throw new CrimeException("Crime List is Empty.");
+		}
 	}
 	
 }

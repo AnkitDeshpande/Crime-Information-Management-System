@@ -9,16 +9,16 @@ public class Crime {
 	private String desc;
 	private String ps_area;
 	private LocalDate date;
-	private String victim;
+	private String name;
 
-	public Crime(int crime_id, String category, String desc, String ps_area, LocalDate date, String victim) {
+	public Crime(int crime_id, String category, String desc, String ps_area, LocalDate date, String name) {
 		super();
 		this.crime_id = crime_id;
 		this.category = category;
 		this.desc = desc;
 		this.ps_area = ps_area;
 		this.date = date;
-		this.victim = victim;
+		this.name = name;
 	}
 
 	public Crime() {
@@ -66,24 +66,24 @@ public class Crime {
 		this.date = date;
 	}
 
-	public String getVictim() {
-		return victim;
+	public String getName() {
+		return name;
 	}
 
-	public void setVictim(String victim) {
-		this.victim = victim;
+	public void setName(String victim) {
+		this.name = name;
 	}
 
 	@Override
 	public String toString() {
-		return "Crime \n crime_id=" + crime_id + "\n category=" + category + "\n desc=" + desc + "\n ps_area=" + ps_area
-				+ "\n date=" + date + "\n victim=" + victim + "]";
+		return "Crime \n crime_id :" + crime_id + "\n category :" + category + "\n desc :" + desc + "\n ps_area :" + ps_area
+				+ "\n date :" + date + "\n Name :" + name + "\n";
 	}
 
 	@Override
 	public int hashCode() {
 		// TODO Auto-generated method stub
-		return Objects.hash(crime_id, category, desc, ps_area, date, victim);
+		return Objects.hash(crime_id, category, desc, ps_area, date, name);
 	}
 
 	@Override
@@ -97,6 +97,6 @@ public class Crime {
 			return false;
 		Crime other = (Crime) obj;
 		return Objects.equals(category, other.category) && crime_id == other.crime_id
-				&& Objects.equals(victim, other.victim) && desc == other.desc;
+				&& Objects.equals(name, other.name) && desc == other.desc;
 	}
 }
