@@ -1,13 +1,13 @@
 package com.cims.exceptions;
 
-public class DuplicateDataException extends Exception{
+public class InvalidDetailsException extends Exception {
 
-	public DuplicateDataException() {
+	public InvalidDetailsException() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public DuplicateDataException(String message) {
+	public InvalidDetailsException(String message) {
 		super(message);
 		// TODO Auto-generated constructor stub
 	}
